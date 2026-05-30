@@ -2,13 +2,17 @@
 
 A simple, clean notepad app for Android built with Kotlin and Jetpack Compose.
 
+<center>
+<img src="./assets/img.png" style="width:800px">
+</center>
+
 ## Features
 
 - Text notes and checklists
 - Pin notes
 - Search
 - Light, dark, and AMOLED themes
-- Persistent storage
+- Customizable Widgets
 
 ## Installing
 
