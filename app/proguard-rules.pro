@@ -1,0 +1,2 @@
+-keepattributes Signature
+-keep class com.github.quantumvoid0.notepad.** { *; }
