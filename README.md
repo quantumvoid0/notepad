@@ -2,9 +2,7 @@
 
 A simple, clean notepad app for Android built with Kotlin and Jetpack Compose.
 
-<center>
 <img src="./assets/img.png" style="width:800px">
-</center>
 
 ## Features
 
