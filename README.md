@@ -12,7 +12,7 @@ A simple, clean notepad app for Android built with Kotlin and Jetpack Compose.
 
 ## Installing
 
-- goto releases, download latest release and install it
+- goto [latest release](https://github.com/quantumvoid0/notepad/releases/latest) and download the [notepad.apk](https://github.com/quantumvoid0/notepad/releases/download/v1.0/notepad.apk), after doing so open `notepad.apk` to install it.
 
 ## Building yourself for development
 
