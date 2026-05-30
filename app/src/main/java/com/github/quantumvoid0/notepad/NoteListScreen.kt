@@ -31,7 +31,7 @@ fun NoteListScreen(
     onNewNote: (NoteType) -> Unit,
     onDelete: (String) -> Unit,
     onPin: (String) -> Unit,
-    onAbout: () -> Unit
+    onAbout: () -> Unit,
 ) {
     var fabExpanded by remember { mutableStateOf(false) }
     var selectedNoteId by remember { mutableStateOf<String?>(null) }
@@ -44,7 +44,7 @@ fun NoteListScreen(
                         Text(
                             "Notepad",
                             style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
                         )
                     },
                     actions = {
@@ -52,9 +52,10 @@ fun NoteListScreen(
                             Icon(Icons.Outlined.Info, contentDescription = "About")
                         }
                     },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    )
+                    colors =
+                        TopAppBarDefaults.topAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                        ),
                 )
                 // Search bar
                 SearchBar(
@@ -73,15 +74,16 @@ fun NoteListScreen(
                                         Icon(Icons.Default.Close, contentDescription = "Clear")
                                     }
                                 }
-                            }
+                            },
                         )
                     },
                     expanded = false,
                     onExpandedChange = {},
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 8.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 8.dp),
                 ) {}
             }
         },
@@ -90,7 +92,7 @@ fun NoteListScreen(
                 AnimatedVisibility(
                     visible = fabExpanded,
                     enter = fadeIn() + slideInVertically { it },
-                    exit = fadeOut() + slideOutVertically { it }
+                    exit = fadeOut() + slideOutVertically { it },
                 ) {
                     Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         SmallFabItem(
@@ -99,7 +101,7 @@ fun NoteListScreen(
                             onClick = {
                                 fabExpanded = false
                                 onNewNote(NoteType.CHECKLIST)
-                            }
+                            },
                         )
                         SmallFabItem(
                             icon = Icons.Outlined.TextFields,
@@ -107,43 +109,51 @@ fun NoteListScreen(
                             onClick = {
                                 fabExpanded = false
                                 onNewNote(NoteType.TEXT)
-                            }
+                            },
                         )
                     }
                 }
                 Spacer(Modifier.height(8.dp))
                 FloatingActionButton(
                     onClick = { fabExpanded = !fabExpanded },
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
                 ) {
                     AnimatedContent(fabExpanded) { expanded ->
-                        if (expanded) Icon(Icons.Default.Close, contentDescription = "Close")
-                        else Icon(Icons.Default.Add, contentDescription = "New note")
+                        if (expanded) {
+                            Icon(Icons.Default.Close, contentDescription = "Close")
+                        } else {
+                            Icon(Icons.Default.Add, contentDescription = "New note")
+                        }
                     }
                 }
             }
-        }
+        },
     ) { padding ->
         if (notes.isEmpty()) {
             EmptyState(modifier = Modifier.padding(padding))
         } else {
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Fixed(2),
-                contentPadding = PaddingValues(
-                    start = 12.dp, end = 12.dp,
-                    top = padding.calculateTopPadding() + 8.dp,
-                    bottom = padding.calculateBottomPadding() + 80.dp
-                ),
+                contentPadding =
+                    PaddingValues(
+                        start = 12.dp,
+                        end = 12.dp,
+                        top = padding.calculateTopPadding() + 8.dp,
+                        bottom = padding.calculateBottomPadding() + 80.dp,
+                    ),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalItemSpacing = 8.dp
+                verticalItemSpacing = 8.dp,
             ) {
                 items(notes, key = { it.id }) { note ->
                     NoteCard(
                         note = note,
                         isSelected = selectedNoteId == note.id,
                         onClick = {
-                            if (selectedNoteId != null) selectedNoteId = null
-                            else onNoteClick(note.id)
+                            if (selectedNoteId != null) {
+                                selectedNoteId = null
+                            } else {
+                                onNoteClick(note.id)
+                            }
                         },
                         onLongClick = { selectedNoteId = note.id },
                         onDelete = {
@@ -154,7 +164,7 @@ fun NoteListScreen(
                             selectedNoteId = null
                             onPin(note.id)
                         },
-                        modifier = Modifier.animateItem()
+                        modifier = Modifier.animateItem(),
                     )
                 }
             }
@@ -163,20 +173,27 @@ fun NoteListScreen(
 }
 
 @Composable
-fun SmallFabItem(icon: androidx.compose.ui.graphics.vector.ImageVector, label: String, onClick: () -> Unit) {
+fun SmallFabItem(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    onClick: () -> Unit,
+) {
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End) {
         Surface(
             shape = RoundedCornerShape(50),
             color = MaterialTheme.colorScheme.surfaceVariant,
-            tonalElevation = 2.dp
+            tonalElevation = 2.dp,
         ) {
-            Text(label, modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                style = MaterialTheme.typography.labelMedium)
+            Text(
+                label,
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                style = MaterialTheme.typography.labelMedium,
+            )
         }
         Spacer(Modifier.width(8.dp))
         SmallFloatingActionButton(
             onClick = onClick,
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
         ) {
             Icon(icon, contentDescription = label)
         }
@@ -192,12 +209,14 @@ fun NoteCard(
     onLongClick: () -> Unit,
     onDelete: () -> Unit,
     onPin: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val containerColor = if (isSelected)
-        MaterialTheme.colorScheme.primaryContainer
-    else
-        MaterialTheme.colorScheme.surfaceContainerHigh
+    val containerColor =
+        if (isSelected) {
+            MaterialTheme.colorScheme.primaryContainer
+        } else {
+            MaterialTheme.colorScheme.surfaceContainerHigh
+        }
 
     Card(
         modifier = modifier.combinedClickable(onClick = onClick, onLongClick = onLongClick),
@@ -213,7 +232,7 @@ fun NoteCard(
                         fontWeight = FontWeight.SemiBold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                 }
                 if (note.pinned) {
@@ -221,7 +240,7 @@ fun NoteCard(
                         Icons.Default.PushPin,
                         contentDescription = "Pinned",
                         modifier = Modifier.size(14.dp),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                 }
             }
@@ -235,23 +254,28 @@ fun NoteCard(
                             style = MaterialTheme.typography.bodySmall,
                             maxLines = 8,
                             overflow = TextOverflow.Ellipsis,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }
+
                 NoteType.CHECKLIST -> {
                     val preview = note.items.take(5)
                     preview.forEach { item ->
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(vertical = 1.dp)
+                            modifier = Modifier.padding(vertical = 1.dp),
                         ) {
                             Icon(
                                 if (item.checked) Icons.Default.CheckBox else Icons.Outlined.CheckBoxOutlineBlank,
                                 contentDescription = null,
                                 modifier = Modifier.size(14.dp),
-                                tint = if (item.checked) MaterialTheme.colorScheme.primary
-                                       else MaterialTheme.colorScheme.onSurfaceVariant
+                                tint =
+                                    if (item.checked) {
+                                        MaterialTheme.colorScheme.primary
+                                    } else {
+                                        MaterialTheme.colorScheme.onSurfaceVariant
+                                    },
                             )
                             Spacer(Modifier.width(4.dp))
                             Text(
@@ -260,8 +284,12 @@ fun NoteCard(
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                                 textDecoration = if (item.checked) TextDecoration.LineThrough else null,
-                                color = if (item.checked) MaterialTheme.colorScheme.outline
-                                        else MaterialTheme.colorScheme.onSurfaceVariant
+                                color =
+                                    if (item.checked) {
+                                        MaterialTheme.colorScheme.outline
+                                    } else {
+                                        MaterialTheme.colorScheme.onSurfaceVariant
+                                    },
                             )
                         }
                     }
@@ -269,7 +297,7 @@ fun NoteCard(
                         Text(
                             "+${note.items.size - 5} more",
                             style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.outline
+                            color = MaterialTheme.colorScheme.outline,
                         )
                     }
                 }
@@ -281,7 +309,7 @@ fun NoteCard(
                     text = formatDate(note.updatedAt),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
                 )
                 AnimatedVisibility(isSelected) {
                     Row {
@@ -289,7 +317,7 @@ fun NoteCard(
                             Icon(
                                 if (note.pinned) Icons.Default.PushPin else Icons.Outlined.PushPin,
                                 contentDescription = "Pin",
-                                modifier = Modifier.size(16.dp)
+                                modifier = Modifier.size(16.dp),
                             )
                         }
                         IconButton(onClick = onDelete, modifier = Modifier.size(28.dp)) {
@@ -297,7 +325,7 @@ fun NoteCard(
                                 Icons.Outlined.Delete,
                                 contentDescription = "Delete",
                                 modifier = Modifier.size(16.dp),
-                                tint = MaterialTheme.colorScheme.error
+                                tint = MaterialTheme.colorScheme.error,
                             )
                         }
                     }
@@ -315,18 +343,18 @@ fun EmptyState(modifier: Modifier = Modifier) {
                 Icons.AutoMirrored.Outlined.StickyNote2,
                 contentDescription = null,
                 modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.outlineVariant
+                tint = MaterialTheme.colorScheme.outlineVariant,
             )
             Spacer(Modifier.height(16.dp))
             Text(
                 "No notes yet",
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.outline
+                color = MaterialTheme.colorScheme.outline,
             )
             Text(
                 "Tap + to create one",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outlineVariant
+                color = MaterialTheme.colorScheme.outlineVariant,
             )
         }
     }

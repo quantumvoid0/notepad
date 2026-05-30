@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="180dp"
+    android:minHeight="120dp"
+    android:targetCellWidth="2"
+    android:targetCellHeight="2"
+    android:maxResizeWidth="450dp"
+    android:maxResizeHeight="600dp"
+    android:minResizeWidth="120dp"
+    android:minResizeHeight="80dp"
+    android:updatePeriodMillis="0"
+    android:initialLayout="@layout/widget_note"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    android:configure="com.github.quantumvoid0.notepad.WidgetConfigActivity"
+    android:description="@string/widget_description"
+    android:previewImage="@mipmap/ic_notepad" 
+/>

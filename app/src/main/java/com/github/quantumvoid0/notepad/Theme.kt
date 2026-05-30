@@ -9,33 +9,49 @@ import androidx.compose.ui.platform.LocalContext
 
 enum class ThemeMode { LIGHT, DARK, AMOLED }
 
-private val LightColors  = lightColorScheme()
-private val DarkColors   = darkColorScheme()
-private val AmoledColors = darkColorScheme(
-    background = Color.Black,
-    surface    = Color.Black,
-    surfaceVariant       = Color(0xFF1A1A1A),
-    surfaceContainerHigh = Color(0xFF1C1C1C),
-    surfaceContainerLow  = Color(0xFF0D0D0D),
-    surfaceContainer     = Color(0xFF141414),
-)
+private val LightColors = lightColorScheme()
+private val DarkColors = darkColorScheme()
+private val AmoledColors =
+    darkColorScheme(
+        background = Color.Black,
+        surface = Color.Black,
+        surfaceVariant = Color(0xFF1A1A1A),
+        surfaceContainerHigh = Color(0xFF1C1C1C),
+        surfaceContainerLow = Color(0xFF0D0D0D),
+        surfaceContainer = Color(0xFF141414),
+    )
 
 @Composable
 fun NotepadTheme(
     themeMode: ThemeMode = if (isSystemInDarkTheme()) ThemeMode.DARK else ThemeMode.LIGHT,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    val colorScheme = when (themeMode) {
-        ThemeMode.AMOLED -> AmoledColors
-        ThemeMode.LIGHT  -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            dynamicLightColorScheme(LocalContext.current) else LightColors
-        ThemeMode.DARK   -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            dynamicDarkColorScheme(LocalContext.current) else DarkColors
-    }
+    val colorScheme =
+        when (themeMode) {
+            ThemeMode.AMOLED -> {
+                AmoledColors
+            }
+
+            ThemeMode.LIGHT -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    dynamicLightColorScheme(LocalContext.current)
+                } else {
+                    LightColors
+                }
+            }
+
+            ThemeMode.DARK -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    dynamicDarkColorScheme(LocalContext.current)
+                } else {
+                    DarkColors
+                }
+            }
+        }
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography  = Typography(),
-        content     = content
+        typography = Typography(),
+        content = content,
     )
 }

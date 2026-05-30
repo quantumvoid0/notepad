@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Notepad</string>
+    <string name="widget_description">Notepad Widgets</string>
 </resources>

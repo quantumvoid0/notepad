@@ -27,7 +27,7 @@ data class AppInfo(
     val minSdk: Int,
     val targetSdk: Int,
     val buildType: String,
-    val githubUrl: String = "https://github.com/quantumvoid0/notepad"
+    val githubUrl: String = "https://github.com/quantumvoid0/notepad",
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,22 +36,23 @@ fun AboutSheet(
     info: AppInfo,
     themeMode: ThemeMode,
     onThemeChange: (ThemeMode) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     val uriHandler = LocalUriHandler.current
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
-        dragHandle = { BottomSheetDefaults.DragHandle() }
+        dragHandle = { BottomSheetDefaults.DragHandle() },
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 32.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             SectionLabel("Theme")
             Spacer(Modifier.height(4.dp))
@@ -59,30 +60,32 @@ fun AboutSheet(
                 ThemeMode.entries.forEachIndexed { index, mode ->
                     SegmentedButton(
                         selected = themeMode == mode,
-                        onClick  = { onThemeChange(mode) },
-                        shape    = SegmentedButtonDefaults.itemShape(index, ThemeMode.entries.size),
-                        icon     = {}
+                        onClick = { onThemeChange(mode) },
+                        shape = SegmentedButtonDefaults.itemShape(index, ThemeMode.entries.size),
+                        icon = {},
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
                         ) {
                             Icon(
-                                imageVector = when (mode) {
-                                    ThemeMode.LIGHT  -> Icons.Outlined.LightMode
-                                    ThemeMode.DARK   -> Icons.Outlined.DarkMode
-                                    ThemeMode.AMOLED -> Icons.Outlined.Contrast
-                                },
+                                imageVector =
+                                    when (mode) {
+                                        ThemeMode.LIGHT -> Icons.Outlined.LightMode
+                                        ThemeMode.DARK -> Icons.Outlined.DarkMode
+                                        ThemeMode.AMOLED -> Icons.Outlined.Contrast
+                                    },
                                 contentDescription = null,
-                                modifier = Modifier.size(16.dp)
+                                modifier = Modifier.size(16.dp),
                             )
                             Text(
-                                text = when (mode) {
-                                    ThemeMode.LIGHT  -> "Light"
-                                    ThemeMode.DARK   -> "Dark"
-                                    ThemeMode.AMOLED -> "AMOLED"
-                                },
-                                style = MaterialTheme.typography.labelMedium
+                                text =
+                                    when (mode) {
+                                        ThemeMode.LIGHT -> "Light"
+                                        ThemeMode.DARK -> "Dark"
+                                        ThemeMode.AMOLED -> "AMOLED"
+                                    },
+                                style = MaterialTheme.typography.labelMedium,
                             )
                         }
                     }
@@ -95,25 +98,25 @@ fun AboutSheet(
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp),
             ) {
                 Icon(
                     Icons.AutoMirrored.Outlined.StickyNote2,
                     contentDescription = null,
                     modifier = Modifier.size(40.dp),
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
                 Spacer(Modifier.width(12.dp))
                 Column {
                     Text(
                         info.appName,
                         style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
                     )
                     Text(
                         "v${info.versionName}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.outline
+                        color = MaterialTheme.colorScheme.outline,
                     )
                 }
             }
@@ -125,43 +128,44 @@ fun AboutSheet(
             InfoRow("Package name", info.packageName, monospace = true)
             InfoRow("Version name", info.versionName)
             InfoRow("Version code", info.versionCode.toString())
-            InfoRow("Build type",   info.buildType)
+            InfoRow("Build type", info.buildType)
 
             Spacer(Modifier.height(12.dp))
             SectionLabel("SDK")
             InfoRow("Compile SDK", "API ${info.compileSdk}")
-            InfoRow("Target SDK",  "API ${info.targetSdk}")
-            InfoRow("Min SDK",     "API ${info.minSdk}")
+            InfoRow("Target SDK", "API ${info.targetSdk}")
+            InfoRow("Min SDK", "API ${info.minSdk}")
 
             Spacer(Modifier.height(12.dp))
             HorizontalDivider()
             Spacer(Modifier.height(8.dp))
 
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { uriHandler.openUri(info.githubUrl) }
-                    .padding(vertical = 12.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable { uriHandler.openUri(info.githubUrl) }
+                        .padding(vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         Icons.Outlined.Code,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                     Spacer(Modifier.width(12.dp))
                     Column {
                         Text(
                             "Source code",
                             style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium,
                         )
                         Text(
                             info.githubUrl.removePrefix("https://"),
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     }
                 }
@@ -169,7 +173,7 @@ fun AboutSheet(
                     Icons.AutoMirrored.Outlined.OpenInNew,
                     contentDescription = "Open",
                     modifier = Modifier.size(16.dp),
-                    tint = MaterialTheme.colorScheme.outline
+                    tint = MaterialTheme.colorScheme.outline,
                 )
             }
         }
@@ -183,31 +187,36 @@ private fun SectionLabel(text: String) {
         style = MaterialTheme.typography.labelSmall,
         color = MaterialTheme.colorScheme.primary,
         fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(bottom = 4.dp)
+        modifier = Modifier.padding(bottom = 4.dp),
     )
 }
 
 @Composable
-private fun InfoRow(label: String, value: String, monospace: Boolean = false) {
+private fun InfoRow(
+    label: String,
+    value: String,
+    monospace: Boolean = false,
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 6.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 6.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             label,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
         Text(
             value,
             style = MaterialTheme.typography.bodyMedium,
             fontFamily = if (monospace) FontFamily.Monospace else null,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
         )
     }
 }
