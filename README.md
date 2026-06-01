@@ -12,7 +12,7 @@ A simple, clean notepad app for Android built with Kotlin and Jetpack Compose.
 - Light, dark, and AMOLED themes
 - Customizable Widgets
 
-## Installing
+## Installation
 
 > [!NOTE]
 > Android versions from 8 to 16 are currently supported
